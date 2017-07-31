@@ -22,7 +22,7 @@ class App extends Component {
         <div className="App-header">
           <h2>CPS Lab 14F Rainnow Controller</h2>
         </div>
-        <p className="App-intro">
+        <div className="App-intro">
           <section
             className="main-contents"
             style={{
@@ -32,10 +32,7 @@ class App extends Component {
             }}
           >
             <div>
-              <div
-                class="circle-box"
-                style={{ position: 'relative', height: 350 }}
-              >
+              <div className="circle-box" style={{ height: 350 }}>
                 {_.map(_.range(0, 12), i => {
                   const it = (i + 9) % 12
                   const x = -Math.cos(red * it) * r + r
@@ -47,14 +44,15 @@ class App extends Component {
                         position: 'absolute',
                         left: x,
                         top: y,
+                        width: '2em',
+                        height: '2em',
                         backgroundColor: colors[i].off ? '#aaa' : colors[i].hex,
                       }}
-                      onPress={() => {
+                      onClick={() => {
                         colors[i] = {
                           ...color,
                           off: false,
                         }
-                        console.log(colors[i])
                         this.setState({
                           colors: colors,
                         })
@@ -71,7 +69,7 @@ class App extends Component {
               />
             </div>
           </section>
-        </p>
+        </div>
       </div>
     )
   }

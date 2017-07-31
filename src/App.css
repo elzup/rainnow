@@ -29,18 +29,12 @@
 
 .main-contents {
   position: relative;
-  width: 100%;
 }
 .circle-box {
   position: relative;
-  margin: 0 auto;
 }
-div.item {
+.item {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
   border-radius: 20px;
   background-color: #999;
 }
