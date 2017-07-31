@@ -5,11 +5,12 @@ import _ from 'lodash'
 import './App.css'
 
 const initColor = { hex: '#000', off: true, rgb: { r: 0, g: 0, b: 0 } }
+const NUM = 16
 
 class App extends Component {
   state = {
     color: initColor,
-    colors: _.zipObject(_.range(12), _.fill(Array(12), initColor)),
+    colors: _.zipObject(_.range(NUM), _.fill(Array(NUM), initColor)),
   }
 
   async postLed(id, color) {
@@ -28,8 +29,7 @@ class App extends Component {
   }
   render() {
     const { colors, color } = this.state
-    const num = 12
-    const deg = 360.0 / num
+    const deg = 360.0 / NUM
     const r = 150
     const red = deg * Math.PI / 180.0
     return (
@@ -55,8 +55,8 @@ class App extends Component {
                   margin: '20px 10px',
                 }}
               >
-                {_.map(_.range(0, 12), i => {
-                  const it = (i + 9) % 12
+                {_.map(_.range(0, NUM), i => {
+                  const it = (i + 12) % NUM
                   const x = -Math.cos(red * it) * r + r - 20
                   const y = Math.sin(red * it) * r + r
                   return (
