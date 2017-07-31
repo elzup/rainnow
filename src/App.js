@@ -21,8 +21,9 @@ class App extends Component {
           >
             <section class="circle-box" style={{ position: 'relative' }}>
               {_.map(_.range(0, 12), i => {
-                const x = Math.cos(red * i) * r
-                const y = Math.sin(red * i) * r + r
+                const it = (i + 9) % 12
+                const x = -Math.cos(red * it) * r
+                const y = Math.sin(red * it) * r + r
                 return (
                   <div
                     key={i}
