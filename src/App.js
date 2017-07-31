@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-import { SketchPicker } from 'react-color'
+import { CirclePicker } from 'react-color'
 import _ from 'lodash'
 
-import logo from './logo.svg'
 import './App.css'
 
 class App extends Component {
   state = {
-    leds: _.times({ r: 0, g: 0, b: 0, off: true, blink: true }),
-    color: null,
+    color: { hex: '#fff' },
+    colors: _.map(_.range(12), () => ({
+      off: true,
+    })),
   }
-  static onClick() {}
   render() {
+    const { colors, color } = this.state
     const num = 12
     const deg = 360.0 / num
     const r = 100
@@ -23,7 +24,7 @@ class App extends Component {
         </div>
         <p className="App-intro">
           <section
-            class="main-contents"
+            className="main-contents"
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -40,22 +41,33 @@ class App extends Component {
                   const x = -Math.cos(red * it) * r + r
                   const y = Math.sin(red * it) * r + r
                   return (
-                    <div
+                    <button
                       key={i}
                       style={{
                         position: 'absolute',
                         left: x,
                         top: y,
+                        backgroundColor: colors[i].off ? '#aaa' : colors[i].hex,
                       }}
-                    >
-                      {i}
-                    </div>
+                      onPress={() => {
+                        colors[i] = {
+                          ...color,
+                          off: false,
+                        }
+                        console.log(colors[i])
+                        this.setState({
+                          colors: colors,
+                        })
+                      }}
+                    />
                   )
                 })}
               </div>
-              <SketchPicker
-                color={this.state.background}
-                onChangeComplete={this.handleChangeComplete}
+              <CirclePicker
+                color={color.hex}
+                onChangeComplete={color => {
+                  this.setState({ color })
+                }}
               />
             </div>
           </section>
