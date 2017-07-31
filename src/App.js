@@ -15,7 +15,7 @@ class App extends Component {
     const { colors, color } = this.state
     const num = 12
     const deg = 360.0 / num
-    const r = 100
+    const r = 150
     const red = deg * Math.PI / 180.0
     return (
       <div className="App">
@@ -32,10 +32,17 @@ class App extends Component {
             }}
           >
             <div>
-              <div className="circle-box" style={{ height: 350 }}>
+              <div
+                className="circle-box"
+                style={{
+                  height: r * 2 + 60,
+                  width: r * 2,
+                  margin: '20px 10px',
+                }}
+              >
                 {_.map(_.range(0, 12), i => {
                   const it = (i + 9) % 12
-                  const x = -Math.cos(red * it) * r + r
+                  const x = -Math.cos(red * it) * r + r - 20
                   const y = Math.sin(red * it) * r + r
                   return (
                     <button
@@ -44,8 +51,8 @@ class App extends Component {
                         position: 'absolute',
                         left: x,
                         top: y,
-                        width: '2em',
-                        height: '2em',
+                        width: 40,
+                        height: 40,
                         backgroundColor: colors[i].off ? '#aaa' : colors[i].hex,
                       }}
                       onClick={() => {
@@ -63,6 +70,9 @@ class App extends Component {
               </div>
               <CirclePicker
                 color={color.hex}
+                width={340}
+                circleSize={40}
+                circleSpacing={16}
                 onChangeComplete={color => {
                   this.setState({ color })
                 }}
