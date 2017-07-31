@@ -9,14 +9,14 @@ const initColor = { hex: '#000', off: true, rgb: { r: 0, g: 0, b: 0 } }
 class App extends Component {
   state = {
     color: initColor,
-    colors: _.zip(_.range(12), _.fill(Array(12), initColor)),
+    colors: _.zipObject(_.range(12), _.fill(Array(12), initColor)),
   }
 
   async postLed(id, color) {
     const { rgb, off } = color
-    await fetch(`http://rainnow.cps-lab.private/rpc/Control`, {
+    const res = await fetch(`http://rainnow.cps-lab.private/rpc/Control`, {
       method: 'POST',
-      mode: 'cors',
+      mode: 'no-cors',
       body: JSON.stringify({
         off,
         start: id,
@@ -24,6 +24,7 @@ class App extends Component {
         color: rgb,
       }),
     })
+    console.log(res)
   }
   render() {
     const { colors, color } = this.state
@@ -67,7 +68,7 @@ class App extends Component {
                         top: y,
                         width: 40,
                         height: 40,
-                        backgroundColor: colors[i].hex,
+                        background: colors[i].hex,
                       }}
                       onClick={() => {
                         const color = {
@@ -75,7 +76,7 @@ class App extends Component {
                           off: false,
                         }
                         this.setState({
-                          colors: { ...colors, i: color },
+                          colors: { ...colors, [i]: color },
                         })
                         this.postLed(i, color)
                       }}
