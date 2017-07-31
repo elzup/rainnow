@@ -4,12 +4,26 @@ import _ from 'lodash'
 
 import './App.css'
 
+const initColor = { hex: '#000', off: true, rgb: { r: 0, g: 0, b: 0 } }
+
 class App extends Component {
   state = {
-    color: { hex: '#fff' },
-    colors: _.map(_.range(12), () => ({
-      off: true,
-    })),
+    color: initColor,
+    colors: _.zip(_.range(12), _.fill(Array(12), initColor)),
+  }
+
+  async postLed(id, color) {
+    const { rgb, off } = color
+    await fetch(`http://rainnow.cps-lab.private/rpc/Control`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        off,
+        start: id,
+        end: id,
+        color: rgb,
+      }),
+    })
   }
   render() {
     const { colors, color } = this.state
@@ -53,16 +67,17 @@ class App extends Component {
                         top: y,
                         width: 40,
                         height: 40,
-                        backgroundColor: colors[i].off ? '#aaa' : colors[i].hex,
+                        backgroundColor: colors[i].hex,
                       }}
                       onClick={() => {
-                        colors[i] = {
-                          ...color,
+                        const color = {
+                          ...this.state.color,
                           off: false,
                         }
                         this.setState({
-                          colors: colors,
+                          colors: { ...colors, i: color },
                         })
+                        this.postLed(i, color)
                       }}
                     />
                   )
