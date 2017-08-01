@@ -27,6 +27,20 @@ class App extends Component {
     })
     console.log(res)
   }
+
+  async offAll() {
+    const res = await fetch(`http://rainnow.cps-lab.private/rpc/Control`, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({
+        off: true,
+        start: 0,
+        end: NUM - 1,
+      }),
+    })
+    console.log(res)
+  }
+
   render() {
     const { colors, color } = this.state
     const deg = 360.0 / NUM
@@ -83,6 +97,22 @@ class App extends Component {
                     />
                   )
                 })}
+                <button
+                  style={{
+                    position: 'absolute',
+                    left: r - 20,
+                    top: r,
+                    width: 40,
+                    height: 40,
+                    background: '#000',
+                    color: 'white',
+                  }}
+                  onClick={() => {
+                    this.offAll()
+                  }}
+                >
+                  OFF
+                </button>
               </div>
               <CirclePicker
                 color={color.hex}
